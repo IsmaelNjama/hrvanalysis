@@ -32,6 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
 	'localhost',
+    '172.24.4.153','127.0.0.1',
 ]
 
 
@@ -171,7 +172,7 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD =  os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = 'HRVSciHub'
+DEFAULT_FROM_EMAIL = 'ifeelhrv@gmail.com'
 
 REST_FRAMEWORK = {
 	'DEFAULT_PERMISSION_CLASSES' : ('rest_framework.permissions.IsAuthenticated',)
