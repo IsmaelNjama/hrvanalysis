@@ -10,24 +10,52 @@ from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
+from django.views.decorators.csrf import csrf_exempt 
+
+
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import authenticate, login as auth_login
+
+def log_in(request):
+     if request.method == 'POST':
+          form = AuthenticationForm(request, data=request.POST)
+          if form.is_valid():
+               username = form.cleaned_data.get('username')
+               password = form.cleaned_data.get('password')
+               user = authenticate(request, username=username,password=password)
+               if user is not None:
+                    auth_login(request,user)
+                    return redirect('subject_list')
+               else:
+                    messages.error(request, 'Invalid username or password')
+     else:
+          form = AuthenticationForm()
+
+     return render(request, 'users/auth-login.html', {'form':form})              
+
+
 
 def sign_up(request):
     if request.method == 'POST':
         form = UserSignupForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = False
+            user.is_active = True
             user.save()
-            current_site = get_current_site(request)
-            subject = 'Activate Your HRVSciHub Account'
-            message = render_to_string('users/account_activation_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-				'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            user.email_user(subject, message)
-            return redirect('account_activation_sent')
+            # current_site = get_current_site(request)
+            # subject = 'Activate Your HRVSciHub Account'
+            # message = render_to_string('users/account_activation_email.html', {
+            #     'user': user,
+            #     'domain': current_site.domain,
+			# 	'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user),
+            # })
+            # user.email_user(subject, message)
+            # return redirect('account_activation_sent')
+            
+        else:
+             print(form.errors)
+
     else:
         form = UserSignupForm()
     return render(request, 'users/auth-register.html', {'form' : form})
@@ -35,6 +63,12 @@ def sign_up(request):
 
 def account_activation_sent(request):
 	return render(request, 'users/account_activation_sent.html')
+
+
+
+
+
+
 
 
 def activate(request, uidb64, token):

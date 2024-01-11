@@ -14,17 +14,17 @@ class ProfileSerializer(CountryFieldMixin, serializers.HyperlinkedModelSerialize
 		model = Profile
 		fields = '__all__'
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
-		fields = ['id', 'url', 'username', 'email']
+		fields = ['id', 'username', 'email']
 
 
-class SubjectSerializer(serializers.HyperlinkedModelSerializer):
+class SubjectSerializer(serializers.ModelSerializer):
 	user = UserSerializer(read_only=True)
 	class Meta:
 		model = Subject
-		fields = ['id', 'url', 'name', 'gender', 'age', 'user']
+		fields = ['id', 'name', 'gender', 'age', 'user']
 
 
 class ResultSerializer(serializers.HyperlinkedModelSerializer):
@@ -44,9 +44,31 @@ class ResultSerializer(serializers.HyperlinkedModelSerializer):
 
 
 
-class SampleSerializer(serializers.HyperlinkedModelSerializer):
+class SampleSerializer(serializers.ModelSerializer):
 	data = serializers.ListField(child=serializers.FloatField())
 	
 	class Meta:
 		model = Sample
-		fields = ['id', 'url' , 'subject', 'comment', 'data']
+		fields = ['id' , 'subject', 'comment', 'data']
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

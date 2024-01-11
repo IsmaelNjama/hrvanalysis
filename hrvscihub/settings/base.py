@@ -32,7 +32,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
 	'localhost',
-    '172.24.4.153','127.0.0.1',
+    '172.24.4.153','127.0.0.1','http://localhost:3000'
 ]
 
 
@@ -56,12 +56,14 @@ INSTALLED_APPS = [
 	'cloudinary',
 	'cloudinary_storage',
 	'django_celery_results',
+   'rest_framework.authtoken',
 ]
 
-MIDDLEWARE = [   
+MIDDLEWARE = [ 
+    
 	'django.middleware.security.SecurityMiddleware',
 	'whitenoise.middleware.WhiteNoiseMiddleware',
-	'corsheaders.middleware.CorsMiddleware',    
+	'corsheaders.middleware.CorsMiddleware',   
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
@@ -135,9 +137,23 @@ USE_L10N = True
 USE_TZ = True
 
 
+# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
 CORS_ORIGIN_WHITELIST = [
 	'https://hrvscihub.herokuapp.com',
-	'https://res.cloudinary.com'
+	'https://res.cloudinary.com',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000'
+	
+]
+
+CSRF_TRUSTED_ORIGINS= [
+	'https://hrvscihub.herokuapp.com',
+	'https://res.cloudinary.com',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000'
+	
 ]
 
 # Static files (CSS, JavaScript, Images)
@@ -174,8 +190,17 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD =  os.environ.get('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = 'ifeelhrv@gmail.com'
 
+# REST_FRAMEWORK = {
+# 	'DEFAULT_PERMISSION_CLASSES' : ('rest_framework.permissions.IsAuthenticated',)
+# }
+
 REST_FRAMEWORK = {
-	'DEFAULT_PERMISSION_CLASSES' : ('rest_framework.permissions.IsAuthenticated',)
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
