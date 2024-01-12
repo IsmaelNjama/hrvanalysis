@@ -45,11 +45,19 @@ class ResultSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class SampleSerializer(serializers.ModelSerializer):
+	subject = SubjectSerializer(read_only=True)
 	data = serializers.ListField(child=serializers.FloatField())
-	
+
+	def save(self,**kwargs):
+		if kwargs.get('subject') is None:
+			raise serializers.ValidationError('subject needs to be created for user before sample creation')
+		super().save(**kwargs)	
+    
 	class Meta:
 		model = Sample
 		fields = ['id' , 'subject', 'comment', 'data']
+
+
 
 
 

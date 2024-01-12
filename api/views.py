@@ -85,6 +85,14 @@ class SampleView(viewsets.ModelViewSet):
         sample = get_object_or_404(self.get_queryset(), pk=self.kwargs["pk"])
         self.check_object_permissions(self.request, sample)
         return sample
+    
+    def perform_create(self, serializer):
+        subjects = Subject.objects.filter(user=self.request.user)
+        subject = None
+        if len(subjects) ==1:
+            subject = subjects[0]
+        serializer.save(subject= subject)
+
 
 
 class ResultView(viewsets.ModelViewSet):
