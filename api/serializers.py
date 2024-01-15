@@ -14,13 +14,13 @@ class ProfileSerializer(CountryFieldMixin, serializers.HyperlinkedModelSerialize
 		model = Profile
 		fields = '__all__'
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = User
 		fields = ['id', 'username', 'email']
 
 
-class SubjectSerializer(serializers.ModelSerializer):
+class SubjectSerializer(serializers.HyperlinkedModelSerializer):
 	user = UserSerializer(read_only=True)
 	class Meta:
 		model = Subject
@@ -43,19 +43,21 @@ class ResultSerializer(serializers.HyperlinkedModelSerializer):
 		fields = '__all__'
 
 
-
-class SampleSerializer(serializers.ModelSerializer):
+class SampleSerializer(serializers.HyperlinkedModelSerializer):
 	subject = SubjectSerializer(read_only=True)
 	data = serializers.ListField(child=serializers.FloatField())
 
+	
 	def save(self,**kwargs):
 		if kwargs.get('subject') is None:
-			raise serializers.ValidationError('subject needs to be created for user before sample creation')
-		super().save(**kwargs)	
-    
+			raise serializers.ValidationError('create subject before sample upload')
+		super().save(**kwargs)
+	
 	class Meta:
 		model = Sample
-		fields = ['id' , 'subject', 'comment', 'data']
+		fields = ['id', 'url' , 'subject', 'comment', 'data']
+
+
 
 
 

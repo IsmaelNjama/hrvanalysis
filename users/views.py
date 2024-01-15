@@ -10,7 +10,7 @@ from django.utils.encoding import force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
-from django.views.decorators.csrf import csrf_exempt 
+
 
 
 from django.contrib.auth.forms import AuthenticationForm
@@ -31,7 +31,7 @@ def log_in(request):
      else:
           form = AuthenticationForm()
 
-     return render(request, 'users/auth-login.html', {'form':form})              
+     return render(request, 'users/auth-login.html', {'form':form}) 
 
 
 
@@ -52,10 +52,6 @@ def sign_up(request):
             # })
             # user.email_user(subject, message)
             # return redirect('account_activation_sent')
-            
-        else:
-             print(form.errors)
-
     else:
         form = UserSignupForm()
     return render(request, 'users/auth-register.html', {'form' : form})
@@ -63,12 +59,6 @@ def sign_up(request):
 
 def account_activation_sent(request):
 	return render(request, 'users/account_activation_sent.html')
-
-
-
-
-
-
 
 
 def activate(request, uidb64, token):
@@ -109,3 +99,9 @@ def profile(request):
 		'p_form':p_form
 	}
 	return render(request, 'users/profile.html', context)
+
+
+
+
+
+

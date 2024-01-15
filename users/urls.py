@@ -7,7 +7,7 @@ auth_views.PasswordResetView.form_class = CustomPasswordResetForm
 
 urlpatterns = [    
     path('', auth_views.LoginView.as_view(template_name='users/auth-login.html', authentication_form=UserLoginForm), name='login'),
-    path('login/',views.log_in, name='login'),
+    # path('login/',views.log_in, name='login'),
 	path('signup/', views.sign_up, name='signup'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/auth-logout.html'), name='logout'),
     path('account/', views.profile, name='profile'),

@@ -8,12 +8,10 @@ from users.models import Profile
 from analysis.models import Result, Subject, Sample
 
 
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from users.forms import UserSignupForm
-
 
 
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -43,7 +41,6 @@ class LoginAPIView(APIView):
 
 
 
-
 class SignUpAPIView(APIView):
     def post(self,request):
         form = UserSignupForm(request.data)
@@ -55,9 +52,6 @@ class SignUpAPIView(APIView):
             return Response({'detail':'user registerd successful'},status=status.HTTP_201_CREATED)
         else:
              return Response({'errors': form.errors}, status=status.HTTP_400_BAD_REQUEST)
-
-
-
 
 
 
@@ -94,7 +88,6 @@ class SampleView(viewsets.ModelViewSet):
         serializer.save(subject= subject)
 
 
-
 class ResultView(viewsets.ModelViewSet):
     queryset = Result.objects.all()
     serializer_class = ResultSerializer
@@ -125,6 +118,5 @@ class SubjectView(viewsets.ModelViewSet):
         subject = get_object_or_404(self.get_queryset(), pk=self.kwargs["pk"])
         self.check_object_permissions(self.request, subject)
         return subject
-
 
 

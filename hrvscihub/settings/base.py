@@ -31,8 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = [
-	'localhost',
-    '172.24.4.153','127.0.0.1','http://localhost:3000'
+	'localhost','127.0.0.1',
 ]
 
 
@@ -56,14 +55,13 @@ INSTALLED_APPS = [
 	'cloudinary',
 	'cloudinary_storage',
 	'django_celery_results',
-   'rest_framework.authtoken',
+  'rest_framework.authtoken',
 ]
 
-MIDDLEWARE = [ 
-    
+MIDDLEWARE = [   
 	'django.middleware.security.SecurityMiddleware',
 	'whitenoise.middleware.WhiteNoiseMiddleware',
-	'corsheaders.middleware.CorsMiddleware',   
+	'corsheaders.middleware.CorsMiddleware',    
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	'django.middleware.csrf.CsrfViewMiddleware',
@@ -136,25 +134,23 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ORIGIN_WHITELIST = [
 	'https://hrvscihub.herokuapp.com',
 	'https://res.cloudinary.com',
-  'http://localhost:3000',
   'http://127.0.0.1:3000'
-	
 ]
 
-CSRF_TRUSTED_ORIGINS= [
-	'https://hrvscihub.herokuapp.com',
-	'https://res.cloudinary.com',
-  'http://localhost:3000',
-  'http://127.0.0.1:3000'
+# CSRF_TRUSTED_ORIGINS= [
+# 	'https://hrvscihub.herokuapp.com',
+# 	'https://res.cloudinary.com',
+#   'http://localhost:3000',
+#   'http://127.0.0.1:3000'
 	
-]
+# ]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -188,20 +184,21 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD =  os.environ.get('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = 'ifeelhrv@gmail.com'
-
-# REST_FRAMEWORK = {
-# 	'DEFAULT_PERMISSION_CLASSES' : ('rest_framework.permissions.IsAuthenticated',)
-# }
+DEFAULT_FROM_EMAIL = 'HRVSciHub'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
-    ],
+	'DEFAULT_PERMISSION_CLASSES' : ('rest_framework.permissions.IsAuthenticated',)
 }
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.AllowAny',
+#     ],
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.TokenAuthentication',
+        
+#     ],
+# }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
@@ -212,3 +209,7 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_TASK_SOFT_TIME_LIMIT = 540
 CELERY_TASK_TIME_LIMIT = 600
+
+
+
+
