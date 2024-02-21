@@ -75,17 +75,33 @@ class SampleView(viewsets.ModelViewSet):
         user = self.request.user 
         return self.queryset.filter(subject__user=user)
     
-    def get_object(self):
-        sample = get_object_or_404(self.get_queryset(), pk=self.kwargs["pk"])
-        self.check_object_permissions(self.request, sample)
+    # def get_object(self):
+    #     sample = get_object_or_404(self.get_queryset(), pk=self.kwargs["pk"])
+    #     self.check_object_permissions(self.request, sample)
+    #     return sample
+
+    def retrieve(self,request,pk=None):
+        sample = get_object_or_404(self.get_queryset(),pk=pk)
+        self.check_object_permissions(request,sample)
         return sample
+
     
-    def perform_create(self, serializer):
-        subjects = Subject.objects.filter(user=self.request.user)
-        subject = None
-        if len(subjects) ==1:
-            subject = subjects[0]
-        serializer.save(subject= subject)
+    
+
+    def create(self,request):
+        subject = Subject.objects.filter(user=request.user).first()
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            print("testseur>>>")
+            serializer.save(subject=subject)
+            print("another test")
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    # def list(self,request):
+    #     return super().list(request)  
+    
+
 
 
 class ResultView(viewsets.ModelViewSet):
