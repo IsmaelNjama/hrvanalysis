@@ -23,3 +23,5 @@ services:
     volumes:
       - ./web:/web
     container_name: celery
+    environment:
+      - CELERY_BROKER_URL = 'redis://localhost:6379'

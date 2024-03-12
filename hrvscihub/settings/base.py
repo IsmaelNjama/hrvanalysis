@@ -202,7 +202,8 @@ REST_FRAMEWORK = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+# CELERY_BROKER_URL = os.environ.get('REDIS_URL')
+CELERY_BROKER_URL = 'redis://localhost:6379'
 
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'

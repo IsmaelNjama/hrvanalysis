@@ -14,7 +14,8 @@ env = environ.Env(
     EMAIL_PORT=(str, '587'),
     EMAIL_HOST_USER=(str, 'ifeelhrv@gmail.com'),
     EMAIL_HOST_PASSWORD=(str, 'CSpWNK4vcbyIBA8G'),
-    CELERY_BROKER_URL = (str, '127.0.0.1'),
+    # CELERY_BROKER_URL = (str, '127.0.0.1'),
+    CELERY_BROKER_URL = 'redis://localhost:6379',
 )
 
 # Raises django's ImproperlyConfigured exception if SECRET_KEY not in os.environ

@@ -93,9 +93,7 @@ class SampleView(viewsets.ModelViewSet):
         serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
-            print("testseur>>>")
             serializer.save(subject=subject)
-            print("another test")
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     # def list(self,request):
